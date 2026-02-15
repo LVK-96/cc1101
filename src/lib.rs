@@ -90,6 +90,19 @@ where
         Ok(Cc1101(lowlevel::Cc1101::new(spi)?))
     }
 
+    /// Immutable access to the underlying low-level driver.
+    ///
+    /// This is an "escape hatch" for register access
+    /// not supported by the high-level API
+    pub fn lowlevel(&self) -> &lowlevel::Cc1101<SPI> {
+        &self.0
+    }
+
+    /// Mutable access to the underlying low-level driver.
+    pub fn lowlevel_mut(&mut self) -> &mut lowlevel::Cc1101<SPI> {
+        &mut self.0
+    }
+
     /// Last Chip Status Byte
     pub fn get_chip_status(&mut self) -> Option<StatusByte> {
         self.0.status
